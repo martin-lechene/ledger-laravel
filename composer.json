@@ -1,0 +1,53 @@
+{
+    "name": "yourvendor/ledger-manager",
+    "description": "Enterprise-grade Laravel package for managing Ledger hardware wallets with multi-chain support, REST API, security auditing, and real-time dashboards",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Your Name",
+            "email": "your.email@example.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "phpseclib/phpseclib": "^3.0",
+        "web3p/web3.php": "^2.0",
+        "nesbot/carbon": "^2.0",
+        "symfony/process": "^6.0",
+        "illuminate/cache": "^10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "mockery/mockery": "^1.5",
+        "laravel/pint": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "YourVendor\\LedgerManager\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "YourVendor\\LedgerManager\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "YourVendor\\LedgerManager\\ServiceProvider"
+            ],
+            "aliases": {
+                "Ledger": "YourVendor\\LedgerManager\\Facades\\Ledger"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
