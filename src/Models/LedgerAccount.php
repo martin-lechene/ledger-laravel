@@ -35,7 +35,7 @@ class LedgerAccount extends Model
 
     public function device(): BelongsTo
     {
-        return $this->belongsTo(LedgerDevice::class);
+        return $this->belongsTo(LedgerDevice::class, 'ledger_device_id');
     }
 
     public function transactions(): HasMany

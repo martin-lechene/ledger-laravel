@@ -38,7 +38,7 @@ class LedgerTransaction extends Model
 
     public function account(): BelongsTo
     {
-        return $this->belongsTo(LedgerAccount::class);
+        return $this->belongsTo(LedgerAccount::class, 'ledger_account_id');
     }
 
     public function markAsSigned(string $data): void

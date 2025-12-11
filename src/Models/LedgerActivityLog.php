@@ -25,12 +25,12 @@ class LedgerActivityLog extends Model
 
     public function device(): BelongsTo
     {
-        return $this->belongsTo(LedgerDevice::class);
+        return $this->belongsTo(LedgerDevice::class, 'ledger_device_id');
     }
 
     public function account(): BelongsTo
     {
-        return $this->belongsTo(LedgerAccount::class);
+        return $this->belongsTo(LedgerAccount::class, 'ledger_account_id');
     }
 
     public static function log(

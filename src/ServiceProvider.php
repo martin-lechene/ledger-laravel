@@ -62,7 +62,7 @@ class ServiceProvider extends BaseServiceProvider
         ], 'ledger-config');
 
         // Publish migrations
-        $this->publishesMigrations([
+        $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'ledger-migrations');
 

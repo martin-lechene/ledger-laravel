@@ -22,10 +22,11 @@ class LedgerService
     public function discoverDevices(string $transportType = 'usb'): Collection
     {
         $devices = $this->discoveryService->discover($transportType);
+        $devicesCollection = is_array($devices) ? collect($devices) : $devices;
         
-        LedgerActivityLog::log('discover_devices', 'success', null, null, "Discovered {$devices->count()} devices via {$transportType}");
+        LedgerActivityLog::log('discover_devices', 'success', null, null, "Discovered {$devicesCollection->count()} devices via {$transportType}");
         
-        return collect($devices);
+        return $devicesCollection;
     }
 
     public function connect(string $deviceId, string $transportType = 'usb'): bool
@@ -186,9 +187,12 @@ class LedgerService
         $query = LedgerTransaction::query();
         
         if ($deviceId) {
-            $query->whereHas('account', function ($q) use ($deviceId) {
-                $q->where('ledger_device_id', $deviceId);
-            });
+            $device = LedgerDevice::where('device_id', $deviceId)->first();
+            if ($device) {
+                $query->whereHas('account', function ($q) use ($device) {
+                    $q->where('ledger_device_id', $device->id);
+                });
+            }
         }
         
         if ($chain) {

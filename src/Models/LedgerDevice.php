@@ -5,6 +5,7 @@ namespace MartinLechene\LedgerManager\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Collection;
 
 class LedgerDevice extends Model
@@ -39,9 +40,14 @@ class LedgerDevice extends Model
         return $this->hasMany(LedgerAccount::class);
     }
 
-    public function transactions(): HasMany
+    public function transactions(): HasManyThrough
     {
-        return $this->hasMany(LedgerTransaction::class);
+        return $this->hasManyThrough(
+            LedgerTransaction::class,
+            LedgerAccount::class,
+            'ledger_device_id',
+            'ledger_account_id'
+        );
     }
 
     public function logs(): HasMany
@@ -56,7 +62,7 @@ class LedgerDevice extends Model
 
     public function isConnected(): bool
     {
-        return $this->is_active && $this->last_connected_at && $this->last_connected_at->isRecent();
+        return $this->is_active && $this->last_connected_at && $this->last_connected_at->isAfter(now()->subMinutes(5));
     }
 
     public function getActiveAccountsCount(): int
