@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\Contracts;
+namespace MartinLechene\LedgerManager\Contracts;
 
 interface ChainHandlerInterface
 {

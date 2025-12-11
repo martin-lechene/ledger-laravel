@@ -1,9 +1,9 @@
 <?php
 
-namespace YourVendor\LedgerManager\Chains;
+namespace MartinLechene\LedgerManager\Chains;
 
-use YourVendor\LedgerManager\Contracts\ChainHandlerInterface;
-use YourVendor\LedgerManager\Contracts\TransportInterface;
+use MartinLechene\LedgerManager\Contracts\ChainHandlerInterface;
+use MartinLechene\LedgerManager\Contracts\TransportInterface;
 
 class PolkadotHandler implements ChainHandlerInterface
 {

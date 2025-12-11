@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\APDU;
+namespace MartinLechene\LedgerManager\APDU;
 
 class EthereumAPDU
 {

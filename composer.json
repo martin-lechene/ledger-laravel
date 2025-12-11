@@ -1,12 +1,12 @@
 {
-    "name": "yourvendor/ledger-manager",
+    "name": "martin-lechene/ledger-manager",
     "description": "Enterprise-grade Laravel package for managing Ledger hardware wallets with multi-chain support, REST API, security auditing, and real-time dashboards",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Your Name",
-            "email": "your.email@example.com"
+            "name": "Martin Lechene",
+            "email": "martin@lechene.be"
         }
     ],
     "require": {
@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "YourVendor\\LedgerManager\\": "src/"
+            "MartinLechene\\LedgerManager\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -34,16 +34,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "YourVendor\\LedgerManager\\Tests\\": "tests/"
+            "MartinLechene\\LedgerManager\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "YourVendor\\LedgerManager\\ServiceProvider"
+                "MartinLechene\\LedgerManager\\ServiceProvider"
             ],
             "aliases": {
-                "Ledger": "YourVendor\\LedgerManager\\Facades\\Ledger"
+                "Ledger": "MartinLechene\\LedgerManager\\Facades\\Ledger"
             }
         }
     },

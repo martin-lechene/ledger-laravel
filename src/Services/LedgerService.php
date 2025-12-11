@@ -1,12 +1,12 @@
 <?php
 
-namespace YourVendor\LedgerManager\Services;
+namespace MartinLechene\LedgerManager\Services;
 
 use Illuminate\Support\Collection;
-use YourVendor\LedgerManager\Models\LedgerDevice;
-use YourVendor\LedgerManager\Models\LedgerAccount;
-use YourVendor\LedgerManager\Models\LedgerTransaction;
-use YourVendor\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerTransaction;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
 
 class LedgerService
 {

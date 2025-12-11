@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\Http\Middleware;
+namespace MartinLechene\LedgerManager\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

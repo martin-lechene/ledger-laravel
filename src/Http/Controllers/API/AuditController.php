@@ -1,10 +1,10 @@
 <?php
 
-namespace YourVendor\LedgerManager\Http\Controllers\API;
+namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
-use YourVendor\LedgerManager\Security\SecurityAuditor;
-use YourVendor\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Security\SecurityAuditor;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
 
 class AuditController
 {

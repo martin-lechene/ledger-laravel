@@ -1,8 +1,8 @@
 <?php
 
-namespace YourVendor\LedgerManager\Transport;
+namespace MartinLechene\LedgerManager\Transport;
 
-use YourVendor\LedgerManager\Contracts\TransportInterface;
+use MartinLechene\LedgerManager\Contracts\TransportInterface;
 
 class BluetoothTransport implements TransportInterface
 {

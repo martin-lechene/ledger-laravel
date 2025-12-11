@@ -25,8 +25,8 @@ A complete, production-ready Laravel package for managing Ledger hardware wallet
 ## 📦 Installation
 
 ```bash
-composer require yourvendor/ledger-manager
-php artisan vendor:publish --provider="YourVendor\LedgerManager\ServiceProvider"
+composer require martin-lechene/ledger-manager
+php artisan vendor:publish --provider="MartinLechene\LedgerManager\ServiceProvider"
 php artisan migrate
 ```
 
@@ -34,7 +34,7 @@ php artisan migrate
 
 ### Via Facade
 ```php
-use YourVendor\LedgerManager\Facades\Ledger;
+use MartinLechene\LedgerManager\Facades\Ledger;
 
 // Discover devices
 $devices = Ledger::discoverDevices('usb');

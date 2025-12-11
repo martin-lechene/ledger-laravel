@@ -4,11 +4,11 @@ if (!function_exists('ledger')) {
     /**
      * Get the LedgerService instance.
      *
-     * @return \YourVendor\LedgerManager\Services\LedgerService
+     * @return \MartinLechene\LedgerManager\Services\LedgerService
      */
     function ledger()
     {
-        return app(\YourVendor\LedgerManager\Services\LedgerService::class);
+        return app(\MartinLechene\LedgerManager\Services\LedgerService::class);
     }
 }
 

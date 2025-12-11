@@ -1,11 +1,11 @@
 <?php
 
-namespace YourVendor\LedgerManager\Http\Controllers\API;
+namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use YourVendor\LedgerManager\Services\LedgerService;
-use YourVendor\LedgerManager\Models\LedgerTransaction;
+use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Models\LedgerTransaction;
 
 class TransactionsController
 {
@@ -50,7 +50,7 @@ class TransactionsController
                 'tx_data' => 'required|string',
             ]);
 
-            $device = \YourVendor\LedgerManager\Models\LedgerDevice::find($validated['device_id']);
+            $device = \MartinLechene\LedgerManager\Models\LedgerDevice::find($validated['device_id']);
             if (!$device) {
                 return response()->json(['success' => false, 'error' => 'Device not found'], 404);
             }

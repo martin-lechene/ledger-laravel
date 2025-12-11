@@ -1,11 +1,11 @@
 <?php
 
-namespace YourVendor\LedgerManager\Webhooks;
+namespace MartinLechene\LedgerManager\Webhooks;
 
 use Illuminate\Support\Facades\Queue;
-use YourVendor\LedgerManager\Models\LedgerDevice;
-use YourVendor\LedgerManager\Models\LedgerTransaction;
-use YourVendor\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Models\LedgerTransaction;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
 
 class WebhookManager
 {
@@ -57,7 +57,7 @@ class WebhookManager
 
         foreach ($webhookEndpoints as $endpoint => $config) {
             if (in_array($event, $config['events'] ?? [])) {
-                Queue::push(new \YourVendor\LedgerManager\Jobs\DispatchWebhook(
+                Queue::push(new \MartinLechene\LedgerManager\Jobs\DispatchWebhook(
                     $endpoint,
                     $event,
                     $payload,

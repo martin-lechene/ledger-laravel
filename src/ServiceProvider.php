@@ -1,14 +1,14 @@
 <?php
 
-namespace YourVendor\LedgerManager;
+namespace MartinLechene\LedgerManager;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use YourVendor\LedgerManager\Services\LedgerService;
-use YourVendor\LedgerManager\Services\TransportFactory;
-use YourVendor\LedgerManager\Services\ChainFactory;
-use YourVendor\LedgerManager\Services\DeviceDiscoveryService;
-use YourVendor\LedgerManager\Services\HIDService;
-use YourVendor\LedgerManager\Security\SecurityAuditor;
+use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Services\TransportFactory;
+use MartinLechene\LedgerManager\Services\ChainFactory;
+use MartinLechene\LedgerManager\Services\DeviceDiscoveryService;
+use MartinLechene\LedgerManager\Services\HIDService;
+use MartinLechene\LedgerManager\Security\SecurityAuditor;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -76,11 +76,11 @@ class ServiceProvider extends BaseServiceProvider
         // Register middleware
         $this->app['router']->aliasMiddleware(
             'ledger.throttle',
-            \YourVendor\LedgerManager\Http\Middleware\LedgerThrottle::class
+            \MartinLechene\LedgerManager\Http\Middleware\LedgerThrottle::class
         );
         $this->app['router']->aliasMiddleware(
             'ledger.security',
-            \YourVendor\LedgerManager\Http\Middleware\LedgerSecurityHeaders::class
+            \MartinLechene\LedgerManager\Http\Middleware\LedgerSecurityHeaders::class
         );
     }
 }

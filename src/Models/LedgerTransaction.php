@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\Models;
+namespace MartinLechene\LedgerManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

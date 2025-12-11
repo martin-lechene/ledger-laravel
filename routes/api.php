@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use YourVendor\LedgerManager\Http\Controllers\API\DevicesController;
-use YourVendor\LedgerManager\Http\Controllers\API\AccountsController;
-use YourVendor\LedgerManager\Http\Controllers\API\TransactionsController;
-use YourVendor\LedgerManager\Http\Controllers\API\AuditController;
+use MartinLechene\LedgerManager\Http\Controllers\API\DevicesController;
+use MartinLechene\LedgerManager\Http\Controllers\API\AccountsController;
+use MartinLechene\LedgerManager\Http\Controllers\API\TransactionsController;
+use MartinLechene\LedgerManager\Http\Controllers\API\AuditController;
 
 Route::middleware(['api', 'throttle:60,1'])->prefix('ledger')->group(function () {
     // Devices

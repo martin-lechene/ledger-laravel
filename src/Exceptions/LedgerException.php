@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\Exceptions;
+namespace MartinLechene\LedgerManager\Exceptions;
 
 class LedgerException extends \Exception
 {

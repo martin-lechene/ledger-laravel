@@ -1,9 +1,9 @@
 <?php
 
-namespace YourVendor\LedgerManager\Helpers;
+namespace MartinLechene\LedgerManager\Helpers;
 
-use YourVendor\LedgerManager\APDU\EthereumAPDU;
-use YourVendor\LedgerManager\APDU\BitcoinAPDU;
+use MartinLechene\LedgerManager\APDU\EthereumAPDU;
+use MartinLechene\LedgerManager\APDU\BitcoinAPDU;
 
 class APDUHelper
 {
@@ -21,7 +21,7 @@ class APDUHelper
 
     public static function parseResponse(string $responseHex): array
     {
-        $response = new \YourVendor\LedgerManager\APDU\APDUResponse($responseHex);
+        $response = new \MartinLechene\LedgerManager\APDU\APDUResponse($responseHex);
 
         return [
             'success' => $response->isSuccess(),

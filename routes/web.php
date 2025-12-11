@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use YourVendor\LedgerManager\Http\Controllers\DashboardController;
+use MartinLechene\LedgerManager\Http\Controllers\DashboardController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::prefix('ledger-dashboard')->group(function () {

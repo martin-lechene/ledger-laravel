@@ -1,9 +1,9 @@
 <?php
 
-namespace YourVendor\LedgerManager\Security;
+namespace MartinLechene\LedgerManager\Security;
 
-use YourVendor\LedgerManager\Models\LedgerDevice;
-use YourVendor\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
 use Illuminate\Support\Collection;
 
 class SecurityAuditor
@@ -25,8 +25,8 @@ class SecurityAuditor
         return [
             'total_devices' => LedgerDevice::count(),
             'active_devices' => LedgerDevice::where('is_active', true)->count(),
-            'total_accounts' => \YourVendor\LedgerManager\Models\LedgerAccount::count(),
-            'total_transactions' => \YourVendor\LedgerManager\Models\LedgerTransaction::count(),
+            'total_accounts' => \MartinLechene\LedgerManager\Models\LedgerAccount::count(),
+            'total_transactions' => \MartinLechene\LedgerManager\Models\LedgerTransaction::count(),
             'audit_timestamp' => now(),
         ];
     }

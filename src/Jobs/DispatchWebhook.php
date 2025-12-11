@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\Jobs;
+namespace MartinLechene\LedgerManager\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

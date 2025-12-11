@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\LedgerManager\Services;
+namespace MartinLechene\LedgerManager\Services;
 
 class DeviceDiscoveryService
 {

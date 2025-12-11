@@ -1,10 +1,10 @@
 <?php
 
-namespace YourVendor\LedgerManager\Http\Controllers\API;
+namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
-use YourVendor\LedgerManager\Services\LedgerService;
-use YourVendor\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
 
 class DevicesController
 {
