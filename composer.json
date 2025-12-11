@@ -1,5 +1,5 @@
 {
-    "name": "martin-lechene/ledger-manager",
+    "name": "martin-lechene/ledger-laravel",
     "description": "Enterprise-grade Laravel package for managing Ledger hardware wallets with multi-chain support, REST API, security auditing, and real-time dashboards",
     "type": "library",
     "license": "MIT",

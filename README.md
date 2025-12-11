@@ -25,7 +25,7 @@ A complete, production-ready Laravel package for managing Ledger hardware wallet
 ## 📦 Installation
 
 ```bash
-composer require martin-lechene/ledger-manager
+composer require martin-lechene/ledger-laravel
 php artisan vendor:publish --provider="MartinLechene\LedgerManager\ServiceProvider"
 php artisan migrate
 ```
