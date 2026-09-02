@@ -4,11 +4,22 @@ return [
     // Activation globale
     'enabled' => env('LEDGER_ENABLED', true),
     'debug' => env('LEDGER_DEBUG', false),
-    
+
     // Configuration par défaut
     'default_transport' => env('LEDGER_TRANSPORT', 'usb'),
     'default_chain' => env('LEDGER_CHAIN', 'ethereum'),
-    
+
+    // Bridge Node.js (ledger-bridge) : PHP ne sait pas piloter l'USB-HID nativement.
+    'bridge' => [
+        'enabled' => env('LEDGER_BRIDGE_ENABLED', true),
+        'host' => env('LEDGER_BRIDGE_HOST', '127.0.0.1'),
+        'port' => env('LEDGER_BRIDGE_PORT', 8756),
+        'timeout' => env('LEDGER_BRIDGE_TIMEOUT', 2),
+        'retry_attempts' => env('LEDGER_BRIDGE_RETRY_ATTEMPTS', 0),
+        'retry_delay_ms' => env('LEDGER_BRIDGE_RETRY_DELAY', 300),
+        'token' => env('LEDGER_BRIDGE_TOKEN', ''),
+    ],
+
     // Configuration des transports
     'transports' => [
         'usb' => [
@@ -30,12 +41,13 @@ return [
             'timeout' => 5000,
         ],
     ],
-    
+
     // Configuration des blockchains
     'chains' => [
         'bitcoin' => [
             'coin_type' => 0,
             'derivation_path' => "m/44'/0'/0'/0",
+            'address_format' => 'bech32',
         ],
         'ethereum' => [
             'coin_type' => 60,
@@ -48,20 +60,22 @@ return [
         'polkadot' => [
             'coin_type' => 354,
             'derivation_path' => "m/44'/354'/0'/0'",
+            'ss58_prefix' => 42,
         ],
         'cardano' => [
             'coin_type' => 1815,
             'derivation_path' => "m/44'/1815'/0'/0",
+            'network' => 'mainnet',
         ],
     ],
-    
+
     // Stockage et cache
     'storage' => [
         'cache_addresses' => true,
         'cache_ttl' => 3600,
         'store' => env('LEDGER_STORE', 'file'),
     ],
-    
+
     // Sécurité
     'security' => [
         'require_pin_confirmation' => true,
@@ -70,7 +84,7 @@ return [
         'ip_whitelist' => env('LEDGER_IP_WHITELIST', ''),
         'two_factor_enabled' => env('LEDGER_2FA_ENABLED', false),
     ],
-    
+
     // Rate limiting
     'rate_limit' => [
         'enabled' => true,
@@ -81,7 +95,7 @@ return [
         'general_per_minute' => 60,
         'general_per_hour' => 500,
     ],
-    
+
     // Webhooks
     'webhooks' => [
         'enabled' => env('LEDGER_WEBHOOKS_ENABLED', true),
@@ -93,7 +107,7 @@ return [
             // ],
         ],
     ],
-    
+
     // Audit
     'audit' => [
         'enabled' => true,
@@ -102,4 +116,3 @@ return [
         'failure_threshold' => 5,
     ],
 ];
-

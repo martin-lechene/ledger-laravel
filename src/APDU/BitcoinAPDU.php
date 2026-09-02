@@ -12,6 +12,7 @@ class BitcoinAPDU
     public static function getPublicKey(string $derivationPath): APDUCommand
     {
         $pathBytes = self::encodeDerivationPath($derivationPath);
+
         return new APDUCommand('E0', '02', '00', '01', $pathBytes);
     }
 
@@ -20,7 +21,8 @@ class BitcoinAPDU
         string $txData
     ): APDUCommand {
         $pathBytes = self::encodeDerivationPath($derivationPath);
-        $combined = $pathBytes . bin2hex($txData);
+        $combined = $pathBytes.bin2hex($txData);
+
         return new APDUCommand('E0', '04', '00', '00', $combined);
     }
 
@@ -44,4 +46,3 @@ class BitcoinAPDU
         return $hex;
     }
 }
-

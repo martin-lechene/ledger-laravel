@@ -3,8 +3,8 @@
 namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
-use MartinLechene\LedgerManager\Services\LedgerService;
 use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Services\LedgerService;
 
 class DevicesController
 {
@@ -14,6 +14,7 @@ class DevicesController
     {
         try {
             $devices = $this->ledger->discoverDevices($transport);
+
             return response()->json([
                 'success' => true,
                 'data' => $devices,
@@ -30,7 +31,7 @@ class DevicesController
     public function list(): JsonResponse
     {
         $devices = LedgerDevice::with(['accounts', 'transactions'])->get()
-            ->map(fn($d) => [
+            ->map(fn ($d) => [
                 'id' => $d->id,
                 'device_id' => $d->device_id,
                 'model' => $d->model,
@@ -52,7 +53,7 @@ class DevicesController
     {
         $device = LedgerDevice::with(['accounts', 'logs'])->find($id);
 
-        if (!$device) {
+        if (! $device) {
             return response()->json([
                 'success' => false,
                 'error' => 'Device not found',
@@ -69,7 +70,7 @@ class DevicesController
     {
         try {
             $device = LedgerDevice::find($id);
-            if (!$device) {
+            if (! $device) {
                 return response()->json(['success' => false, 'error' => 'Device not found'], 404);
             }
 
@@ -96,4 +97,3 @@ class DevicesController
         }
     }
 }
-

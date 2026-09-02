@@ -2,12 +2,12 @@
 
 namespace MartinLechene\LedgerManager\Tests\Unit\Models;
 
-use MartinLechene\LedgerManager\Models\LedgerDevice;
-use MartinLechene\LedgerManager\Models\LedgerAccount;
-use MartinLechene\LedgerManager\Models\LedgerTransaction;
-use MartinLechene\LedgerManager\Models\LedgerActivityLog;
-use MartinLechene\LedgerManager\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Models\LedgerTransaction;
+use MartinLechene\LedgerManager\Tests\TestCase;
 
 class LedgerDeviceTest extends TestCase
 {
@@ -40,7 +40,7 @@ class LedgerDeviceTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -60,7 +60,7 @@ class LedgerDeviceTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -148,7 +148,7 @@ class LedgerDeviceTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
             'is_active' => true,
         ]);

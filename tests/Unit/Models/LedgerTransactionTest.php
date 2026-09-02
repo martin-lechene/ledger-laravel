@@ -2,11 +2,11 @@
 
 namespace MartinLechene\LedgerManager\Tests\Unit\Models;
 
-use MartinLechene\LedgerManager\Models\LedgerDevice;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
 use MartinLechene\LedgerManager\Models\LedgerTransaction;
 use MartinLechene\LedgerManager\Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LedgerTransactionTest extends TestCase
 {
@@ -24,7 +24,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -56,7 +56,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -84,7 +84,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -96,7 +96,7 @@ class LedgerTransactionTest extends TestCase
             'from_address' => $account->public_address,
         ]);
 
-        $signedData = '0x' . bin2hex(random_bytes(65));
+        $signedData = '0x'.bin2hex(random_bytes(65));
         $transaction->markAsSigned($signedData);
 
         $this->assertEquals('signed', $transaction->fresh()->status);
@@ -116,7 +116,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -128,7 +128,7 @@ class LedgerTransactionTest extends TestCase
             'from_address' => $account->public_address,
         ]);
 
-        $txHash = '0x' . bin2hex(random_bytes(32));
+        $txHash = '0x'.bin2hex(random_bytes(32));
         $transaction->markAsSubmitted($txHash);
 
         $this->assertEquals('submitted', $transaction->fresh()->status);
@@ -148,7 +148,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -178,7 +178,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -209,7 +209,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -245,7 +245,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -281,7 +281,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -323,7 +323,7 @@ class LedgerTransactionTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 

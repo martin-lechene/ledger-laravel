@@ -2,9 +2,11 @@
 
 namespace MartinLechene\LedgerManager\Security;
 
-use MartinLechene\LedgerManager\Models\LedgerDevice;
-use MartinLechene\LedgerManager\Models\LedgerActivityLog;
 use Illuminate\Support\Collection;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Models\LedgerTransaction;
 
 class SecurityAuditor
 {
@@ -25,8 +27,8 @@ class SecurityAuditor
         return [
             'total_devices' => LedgerDevice::count(),
             'active_devices' => LedgerDevice::where('is_active', true)->count(),
-            'total_accounts' => \MartinLechene\LedgerManager\Models\LedgerAccount::count(),
-            'total_transactions' => \MartinLechene\LedgerManager\Models\LedgerTransaction::count(),
+            'total_accounts' => LedgerAccount::count(),
+            'total_transactions' => LedgerTransaction::count(),
             'audit_timestamp' => now(),
         ];
     }
@@ -62,7 +64,7 @@ class SecurityAuditor
             $anomalies[] = [
                 'type' => 'high_failure_rate',
                 'severity' => 'warning',
-                'description' => "Plus de 10 opérations échouées en 24h",
+                'description' => 'Plus de 10 opérations échouées en 24h',
                 'count' => $recentLogs->count(),
             ];
         }
@@ -109,7 +111,7 @@ class SecurityAuditor
         // Vérifier les appareils sans firmware récent
         $devices = LedgerDevice::all();
         foreach ($devices as $device) {
-            if (!$device->firmware_version) {
+            if (! $device->firmware_version) {
                 $vulnerabilities[] = [
                     'device_id' => $device->id,
                     'type' => 'unknown_firmware',
@@ -129,7 +131,7 @@ class SecurityAuditor
     {
         $composerLock = base_path('composer.lock');
 
-        if (!file_exists($composerLock)) {
+        if (! file_exists($composerLock)) {
             return [
                 'type' => 'missing_lock',
                 'severity' => 'warning',
@@ -173,7 +175,7 @@ class SecurityAuditor
 
         // Déduire des points pour chaque anomalie
         foreach ($anomalies as $anomaly) {
-            $baseScore -= match($anomaly['severity'] ?? 'info') {
+            $baseScore -= match ($anomaly['severity'] ?? 'info') {
                 'critical' => 20,
                 'high' => 15,
                 'warning' => 5,
@@ -183,7 +185,7 @@ class SecurityAuditor
 
         // Déduire des points pour chaque vulnérabilité
         foreach ($vulnerabilities as $vuln) {
-            $baseScore -= match($vuln['severity'] ?? 'info') {
+            $baseScore -= match ($vuln['severity'] ?? 'info') {
                 'critical' => 20,
                 'high' => 15,
                 'medium' => 10,
@@ -196,14 +198,14 @@ class SecurityAuditor
 
         return [
             'score' => $baseScore,
-            'grade' => match(true) {
+            'grade' => match (true) {
                 $baseScore >= 90 => 'A',
                 $baseScore >= 80 => 'B',
                 $baseScore >= 70 => 'C',
                 $baseScore >= 60 => 'D',
                 default => 'F',
             },
-            'status' => match(true) {
+            'status' => match (true) {
                 $baseScore >= 80 => 'Excellent',
                 $baseScore >= 60 => 'Good',
                 $baseScore >= 40 => 'Fair',
@@ -221,7 +223,7 @@ class SecurityAuditor
             $recommendations[] = [
                 'priority' => 'critical',
                 'action' => 'Enquêter sur les anomalies détectées',
-                'details' => count($anomalies) . ' anomalies trouvées',
+                'details' => count($anomalies).' anomalies trouvées',
             ];
         }
 
@@ -243,4 +245,3 @@ class SecurityAuditor
         return $recommendations;
     }
 }
-

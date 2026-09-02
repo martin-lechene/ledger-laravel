@@ -3,12 +3,15 @@
 namespace MartinLechene\LedgerManager;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use MartinLechene\LedgerManager\Services\LedgerService;
-use MartinLechene\LedgerManager\Services\TransportFactory;
+use MartinLechene\LedgerManager\Http\Middleware\LedgerSecurityHeaders;
+use MartinLechene\LedgerManager\Http\Middleware\LedgerThrottle;
+use MartinLechene\LedgerManager\Security\SecurityAuditor;
 use MartinLechene\LedgerManager\Services\ChainFactory;
 use MartinLechene\LedgerManager\Services\DeviceDiscoveryService;
 use MartinLechene\LedgerManager\Services\HIDService;
-use MartinLechene\LedgerManager\Security\SecurityAuditor;
+use MartinLechene\LedgerManager\Services\LedgerBridgeClient;
+use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Services\TransportFactory;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -27,23 +30,29 @@ class ServiceProvider extends BaseServiceProvider
             return new TransportFactory(config('ledger.transports', []));
         });
 
+        $this->app->singleton(LedgerBridgeClient::class, function ($app) {
+            return new LedgerBridgeClient(config('ledger.bridge', []));
+        });
+
         $this->app->singleton(ChainFactory::class, function ($app) {
-            return new ChainFactory(config('ledger.chains', []));
+            return new ChainFactory(
+                config('ledger.chains', []),
+                $app->make(LedgerBridgeClient::class)
+            );
         });
 
         $this->app->singleton(HIDService::class);
 
         $this->app->singleton(DeviceDiscoveryService::class, function ($app) {
             return new DeviceDiscoveryService(
-                $app->make(TransportFactory::class),
-                $app->make(HIDService::class)
+                $app->make(LedgerBridgeClient::class)
             );
         });
 
         $this->app->singleton(LedgerService::class, function ($app) {
             return new LedgerService(
-                $app->make(TransportFactory::class),
                 $app->make(ChainFactory::class),
+                $app->make(LedgerBridgeClient::class),
                 $app->make(DeviceDiscoveryService::class)
             );
         });
@@ -76,12 +85,11 @@ class ServiceProvider extends BaseServiceProvider
         // Register middleware
         $this->app['router']->aliasMiddleware(
             'ledger.throttle',
-            \MartinLechene\LedgerManager\Http\Middleware\LedgerThrottle::class
+            LedgerThrottle::class
         );
         $this->app['router']->aliasMiddleware(
             'ledger.security',
-            \MartinLechene\LedgerManager\Http\Middleware\LedgerSecurityHeaders::class
+            LedgerSecurityHeaders::class
         );
     }
 }
-

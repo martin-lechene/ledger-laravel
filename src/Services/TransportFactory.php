@@ -4,6 +4,9 @@ namespace MartinLechene\LedgerManager\Services;
 
 use MartinLechene\LedgerManager\Contracts\TransportInterface;
 use MartinLechene\LedgerManager\Exceptions\LedgerException;
+use MartinLechene\LedgerManager\Transport\BluetoothTransport;
+use MartinLechene\LedgerManager\Transport\USBTransport;
+use MartinLechene\LedgerManager\Transport\WebUSBTransport;
 
 class TransportFactory
 {
@@ -11,12 +14,11 @@ class TransportFactory
 
     public function create(string $type): TransportInterface
     {
-        return match($type) {
-            'usb' => new \MartinLechene\LedgerManager\Transport\USBTransport($this->config['usb'] ?? []),
-            'bluetooth' => new \MartinLechene\LedgerManager\Transport\BluetoothTransport($this->config['bluetooth'] ?? []),
-            'webusb' => new \MartinLechene\LedgerManager\Transport\WebUSBTransport($this->config['webusb'] ?? []),
+        return match ($type) {
+            'usb' => new USBTransport($this->config['usb'] ?? []),
+            'bluetooth' => new BluetoothTransport($this->config['bluetooth'] ?? []),
+            'webusb' => new WebUSBTransport($this->config['webusb'] ?? []),
             default => throw new LedgerException("Unsupported transport type: {$type}"),
         };
     }
 }
-

@@ -2,12 +2,12 @@
 
 namespace MartinLechene\LedgerManager\Jobs;
 
+use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 class DispatchWebhook implements ShouldQueue
@@ -23,7 +23,7 @@ class DispatchWebhook implements ShouldQueue
 
     public function handle(): void
     {
-        $client = new Client();
+        $client = new Client;
         $body = json_encode([
             'event' => $this->event,
             'data' => $this->payload,
@@ -56,4 +56,3 @@ class DispatchWebhook implements ShouldQueue
         Log::warning("Webhook dispatch failed: {$exception->getMessage()}");
     }
 }
-

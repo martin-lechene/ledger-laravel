@@ -3,9 +3,10 @@
 namespace MartinLechene\LedgerManager\Webhooks;
 
 use Illuminate\Support\Facades\Queue;
+use MartinLechene\LedgerManager\Jobs\DispatchWebhook;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
 use MartinLechene\LedgerManager\Models\LedgerDevice;
 use MartinLechene\LedgerManager\Models\LedgerTransaction;
-use MartinLechene\LedgerManager\Models\LedgerAccount;
 
 class WebhookManager
 {
@@ -57,7 +58,7 @@ class WebhookManager
 
         foreach ($webhookEndpoints as $endpoint => $config) {
             if (in_array($event, $config['events'] ?? [])) {
-                Queue::push(new \MartinLechene\LedgerManager\Jobs\DispatchWebhook(
+                Queue::push(new DispatchWebhook(
                     $endpoint,
                     $event,
                     $payload,
@@ -67,4 +68,3 @@ class WebhookManager
         }
     }
 }
-

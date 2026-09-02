@@ -19,12 +19,14 @@ class BluetoothTransport implements TransportInterface
     public function connect(string $deviceId): bool
     {
         $this->connectedDeviceId = $deviceId;
+
         return true;
     }
 
     public function disconnect(): bool
     {
         $this->connectedDeviceId = null;
+
         return true;
     }
 
@@ -48,4 +50,3 @@ class BluetoothTransport implements TransportInterface
         return [];
     }
 }
-

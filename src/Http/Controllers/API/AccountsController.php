@@ -4,8 +4,9 @@ namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use MartinLechene\LedgerManager\Services\LedgerService;
 use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Services\LedgerService;
 
 class AccountsController
 {
@@ -26,7 +27,7 @@ class AccountsController
     {
         $account = LedgerAccount::with(['device', 'transactions'])->find($id);
 
-        if (!$account) {
+        if (! $account) {
             return response()->json(['success' => false, 'error' => 'Account not found'], 404);
         }
 
@@ -46,8 +47,8 @@ class AccountsController
                 'start_index' => 'integer|min:0',
             ]);
 
-            $device = \MartinLechene\LedgerManager\Models\LedgerDevice::find($validated['device_id']);
-            if (!$device) {
+            $device = LedgerDevice::find($validated['device_id']);
+            if (! $device) {
                 return response()->json(['success' => false, 'error' => 'Device not found'], 404);
             }
 
@@ -67,4 +68,3 @@ class AccountsController
         }
     }
 }
-

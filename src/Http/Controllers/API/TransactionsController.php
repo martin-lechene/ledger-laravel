@@ -4,8 +4,9 @@ namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
 use MartinLechene\LedgerManager\Models\LedgerTransaction;
+use MartinLechene\LedgerManager\Services\LedgerService;
 
 class TransactionsController
 {
@@ -30,7 +31,7 @@ class TransactionsController
     {
         $transaction = LedgerTransaction::with('account')->find($id);
 
-        if (!$transaction) {
+        if (! $transaction) {
             return response()->json(['success' => false, 'error' => 'Transaction not found'], 404);
         }
 
@@ -50,8 +51,8 @@ class TransactionsController
                 'tx_data' => 'required|string',
             ]);
 
-            $device = \MartinLechene\LedgerManager\Models\LedgerDevice::find($validated['device_id']);
-            if (!$device) {
+            $device = LedgerDevice::find($validated['device_id']);
+            if (! $device) {
                 return response()->json(['success' => false, 'error' => 'Device not found'], 404);
             }
 
@@ -72,4 +73,3 @@ class TransactionsController
         }
     }
 }
-

@@ -2,48 +2,63 @@
 
 namespace MartinLechene\LedgerManager\Chains;
 
-use MartinLechene\LedgerManager\Contracts\ChainHandlerInterface;
-use MartinLechene\LedgerManager\Contracts\TransportInterface;
-
-class PolkadotHandler implements ChainHandlerInterface
+class PolkadotHandler extends AbstractChainHandler
 {
-    protected ?TransportInterface $transport = null;
-
-    public function __construct(protected array $config) {}
-
-    public function setTransport(TransportInterface $transport): void
+    protected function chainName(): string
     {
-        $this->transport = $transport;
+        return 'polkadot';
     }
 
-    public function getAddress(string $derivationPath, bool $display = false): string
-    {
-        return '1' . bin2hex(random_bytes(31));
-    }
-
-    public function signTransaction(string $derivationPath, string $txData): string
-    {
-        return bin2hex(random_bytes(64));
-    }
-
-    public function signMessage(string $derivationPath, string $message): string
-    {
-        return bin2hex(random_bytes(64));
-    }
-
-    public function getAppVersion(): string
-    {
-        return '1.0.0';
-    }
-
-    public function getCoinType(): int
+    protected function defaultCoinType(): int
     {
         return 354;
     }
 
+    public function getAddress(string $derivationPath, bool $display = false): string
+    {
+        $result = $this->bridgeOrFail()->address('polkadot', $derivationPath, $display, $this->sessionId, [
+            'ss58prefix' => (int) ($this->config['ss58_prefix'] ?? 42),
+        ]);
+
+        return $this->extract($result, 'address', 'getAddress');
+    }
+
+    public function signTransaction(string $derivationPath, string $txData): string
+    {
+        $result = $this->bridgeOrFail()->signTransaction(
+            'polkadot',
+            $derivationPath,
+            $this->decodePayload($txData),
+            $this->sessionId
+        );
+
+        return $this->extract($result, 'signature', 'signTransaction');
+    }
+
+    public function signMessage(string $derivationPath, string $message): string
+    {
+        $result = $this->bridgeOrFail()->signMessage('polkadot', $derivationPath, $message, $this->sessionId);
+
+        return $this->extract($result, 'signature', 'signMessage');
+    }
+
+    public function getAppVersion(): string
+    {
+        $result = $this->bridgeOrFail()->appVersion('polkadot', $this->sessionId);
+
+        return $this->extract($result, 'version', 'getAppVersion');
+    }
+
+    public function getCoinType(): int
+    {
+        return $this->coinType();
+    }
+
     public function validateAddress(string $address): bool
     {
-        return strlen($address) >= 32 && strlen($address) <= 48;
+        $length = strlen($address);
+
+        return $length >= 32 && $length <= 48;
     }
 
     public function getAddressFormat(): string
@@ -51,4 +66,3 @@ class PolkadotHandler implements ChainHandlerInterface
         return 'ss58';
     }
 }
-

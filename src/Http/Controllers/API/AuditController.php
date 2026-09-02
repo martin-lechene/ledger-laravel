@@ -3,8 +3,8 @@
 namespace MartinLechene\LedgerManager\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
-use MartinLechene\LedgerManager\Security\SecurityAuditor;
 use MartinLechene\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Security\SecurityAuditor;
 
 class AuditController
 {
@@ -50,4 +50,3 @@ class AuditController
         ]);
     }
 }
-

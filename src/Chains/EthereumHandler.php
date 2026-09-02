@@ -2,46 +2,54 @@
 
 namespace MartinLechene\LedgerManager\Chains;
 
-use MartinLechene\LedgerManager\Contracts\ChainHandlerInterface;
-use MartinLechene\LedgerManager\Contracts\TransportInterface;
-
-class EthereumHandler implements ChainHandlerInterface
+class EthereumHandler extends AbstractChainHandler
 {
-    protected ?TransportInterface $transport = null;
-
-    public function __construct(protected array $config) {}
-
-    public function setTransport(TransportInterface $transport): void
+    protected function chainName(): string
     {
-        $this->transport = $transport;
+        return 'ethereum';
+    }
+
+    protected function defaultCoinType(): int
+    {
+        return 60;
     }
 
     public function getAddress(string $derivationPath, bool $display = false): string
     {
-        // TODO: Implement Ethereum address generation
-        return '0x' . bin2hex(random_bytes(20));
+        $result = $this->bridgeOrFail()->address('ethereum', $derivationPath, $display, $this->sessionId);
+
+        return $this->extract($result, 'address', 'getAddress');
     }
 
     public function signTransaction(string $derivationPath, string $txData): string
     {
-        // TODO: Implement Ethereum transaction signing
-        return '0x' . bin2hex(random_bytes(65));
+        $result = $this->bridgeOrFail()->signTransaction(
+            'ethereum',
+            $derivationPath,
+            $this->decodePayload($txData),
+            $this->sessionId
+        );
+
+        return $this->extract($result, 'signature', 'signTransaction');
     }
 
     public function signMessage(string $derivationPath, string $message): string
     {
-        // TODO: Implement Ethereum message signing
-        return '0x' . bin2hex(random_bytes(65));
+        $result = $this->bridgeOrFail()->signMessage('ethereum', $derivationPath, $message, $this->sessionId);
+
+        return $this->extract($result, 'signature', 'signMessage');
     }
 
     public function getAppVersion(): string
     {
-        return '1.0.0';
+        $result = $this->bridgeOrFail()->appVersion('ethereum', $this->sessionId);
+
+        return $this->extract($result, 'version', 'getAppVersion');
     }
 
     public function getCoinType(): int
     {
-        return 60;
+        return $this->coinType();
     }
 
     public function validateAddress(string $address): bool
@@ -54,4 +62,3 @@ class EthereumHandler implements ChainHandlerInterface
         return 'ethereum';
     }
 }
-

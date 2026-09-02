@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use MartinLechene\LedgerManager\Http\Controllers\API\DevicesController;
 use MartinLechene\LedgerManager\Http\Controllers\API\AccountsController;
-use MartinLechene\LedgerManager\Http\Controllers\API\TransactionsController;
 use MartinLechene\LedgerManager\Http\Controllers\API\AuditController;
+use MartinLechene\LedgerManager\Http\Controllers\API\DevicesController;
+use MartinLechene\LedgerManager\Http\Controllers\API\TransactionsController;
 
 Route::middleware(['api', 'throttle:60,1'])->prefix('ledger')->group(function () {
     // Devices
@@ -29,4 +29,3 @@ Route::middleware(['api', 'throttle:60,1'])->prefix('ledger')->group(function ()
     Route::get('/audit/logs/{days?}', [AuditController::class, 'logs']);
     Route::get('/audit/statistics', [AuditController::class, 'statistics']);
 });
-

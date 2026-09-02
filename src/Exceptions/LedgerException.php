@@ -6,4 +6,3 @@ class LedgerException extends \Exception
 {
     //
 }
-

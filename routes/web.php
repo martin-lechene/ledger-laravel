@@ -14,4 +14,3 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::get('/api-docs', [DashboardController::class, 'apiDocumentation'])->name('ledger.api-docs');
     });
 });
-

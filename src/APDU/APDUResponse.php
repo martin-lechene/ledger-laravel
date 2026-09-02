@@ -5,7 +5,9 @@ namespace MartinLechene\LedgerManager\APDU;
 class APDUResponse
 {
     protected string $data;
+
     protected string $statusWord;
+
     protected const SW_OK = '9000';
 
     public function __construct(string $responseHex)
@@ -41,7 +43,7 @@ class APDUResponse
 
     public function getErrorMessage(): string
     {
-        return match($this->statusWord) {
+        return match ($this->statusWord) {
             '6E00' => 'Class not supported',
             '6D00' => 'Instruction not supported',
             '6A82' => 'File not found',
@@ -51,4 +53,3 @@ class APDUResponse
         };
     }
 }
-

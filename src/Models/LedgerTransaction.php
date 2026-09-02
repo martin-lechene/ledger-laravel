@@ -95,4 +95,3 @@ class LedgerTransaction extends Model
         return $query->where('status', 'pending');
     }
 }
-

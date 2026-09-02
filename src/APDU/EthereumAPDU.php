@@ -12,6 +12,7 @@ class EthereumAPDU
     public static function getPublicKey(string $derivationPath): APDUCommand
     {
         $pathBytes = self::encodeDerivationPath($derivationPath);
+
         return new APDUCommand('E0', '02', '00', '00', $pathBytes);
     }
 
@@ -20,7 +21,8 @@ class EthereumAPDU
         string $txData
     ): APDUCommand {
         $pathBytes = self::encodeDerivationPath($derivationPath);
-        $combined = $pathBytes . bin2hex($txData);
+        $combined = $pathBytes.bin2hex($txData);
+
         return new APDUCommand('E0', '04', '00', '00', $combined);
     }
 
@@ -30,7 +32,8 @@ class EthereumAPDU
     ): APDUCommand {
         $pathBytes = self::encodeDerivationPath($derivationPath);
         $messageHex = bin2hex($message);
-        $combined = $pathBytes . $messageHex;
+        $combined = $pathBytes.$messageHex;
+
         return new APDUCommand('E0', '08', '00', '00', $combined);
     }
 
@@ -54,4 +57,3 @@ class EthereumAPDU
         return $hex;
     }
 }
-

@@ -3,6 +3,7 @@
 namespace MartinLechene\LedgerManager\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use MartinLechene\LedgerManager\Services\LedgerService;
 
 /**
  * @method static \Illuminate\Support\Collection discoverDevices(string $transportType = 'usb')
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Support\Collection getTransactionHistory(?string $deviceId = null, ?string $chain = null, int $limit = 50)
  * @method static string getAppVersion()
  *
- * @see \MartinLechene\LedgerManager\Services\LedgerService
+ * @see LedgerService
  */
 class Ledger extends Facade
 {
@@ -31,7 +32,6 @@ class Ledger extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \MartinLechene\LedgerManager\Services\LedgerService::class;
+        return LedgerService::class;
     }
 }
-

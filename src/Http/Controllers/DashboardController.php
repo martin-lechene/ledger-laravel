@@ -3,11 +3,12 @@
 namespace MartinLechene\LedgerManager\Http\Controllers;
 
 use Illuminate\View\View;
-use MartinLechene\LedgerManager\Services\LedgerService;
-use MartinLechene\LedgerManager\Security\SecurityAuditor;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
 use MartinLechene\LedgerManager\Models\LedgerDevice;
 use MartinLechene\LedgerManager\Models\LedgerTransaction;
-use MartinLechene\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Security\SecurityAuditor;
+use MartinLechene\LedgerManager\Services\LedgerService;
 
 class DashboardController
 {
@@ -21,7 +22,7 @@ class DashboardController
         $stats = [
             'devices' => LedgerDevice::count(),
             'active_devices' => LedgerDevice::where('is_active', true)->count(),
-            'accounts' => \MartinLechene\LedgerManager\Models\LedgerAccount::count(),
+            'accounts' => LedgerAccount::count(),
             'transactions' => LedgerTransaction::count(),
             'today_operations' => LedgerActivityLog::where('created_at', '>=', now()->startOfDay())->count(),
         ];
@@ -101,7 +102,7 @@ class DashboardController
 
     public function accounts(): View
     {
-        $accounts = \MartinLechene\LedgerManager\Models\LedgerAccount::with('device')
+        $accounts = LedgerAccount::with('device')
             ->paginate(25);
 
         return view('ledger::dashboard.accounts', ['accounts' => $accounts]);
@@ -112,4 +113,3 @@ class DashboardController
         return view('ledger::dashboard.api-docs');
     }
 }
-

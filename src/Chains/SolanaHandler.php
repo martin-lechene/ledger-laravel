@@ -2,48 +2,67 @@
 
 namespace MartinLechene\LedgerManager\Chains;
 
-use MartinLechene\LedgerManager\Contracts\ChainHandlerInterface;
-use MartinLechene\LedgerManager\Contracts\TransportInterface;
+use MartinLechene\LedgerManager\Support\Base58;
 
-class SolanaHandler implements ChainHandlerInterface
+class SolanaHandler extends AbstractChainHandler
 {
-    protected ?TransportInterface $transport = null;
-
-    public function __construct(protected array $config) {}
-
-    public function setTransport(TransportInterface $transport): void
+    protected function chainName(): string
     {
-        $this->transport = $transport;
+        return 'solana';
     }
 
-    public function getAddress(string $derivationPath, bool $display = false): string
-    {
-        return base64_encode(random_bytes(32));
-    }
-
-    public function signTransaction(string $derivationPath, string $txData): string
-    {
-        return base64_encode(random_bytes(64));
-    }
-
-    public function signMessage(string $derivationPath, string $message): string
-    {
-        return base64_encode(random_bytes(64));
-    }
-
-    public function getAppVersion(): string
-    {
-        return '1.0.0';
-    }
-
-    public function getCoinType(): int
+    protected function defaultCoinType(): int
     {
         return 501;
     }
 
+    public function getAddress(string $derivationPath, bool $display = false): string
+    {
+        $result = $this->bridgeOrFail()->address('solana', $derivationPath, $display, $this->sessionId);
+        $hex = $this->extract($result, 'address', 'getAddress');
+        $hex = preg_replace('/^0x/', '', $hex);
+
+        return Base58::encode(hex2bin($hex));
+    }
+
+    public function signTransaction(string $derivationPath, string $txData): string
+    {
+        $result = $this->bridgeOrFail()->signTransaction(
+            'solana',
+            $derivationPath,
+            $this->decodePayload($txData),
+            $this->sessionId
+        );
+
+        return $this->extract($result, 'signature', 'signTransaction');
+    }
+
+    public function signMessage(string $derivationPath, string $message): string
+    {
+        $result = $this->bridgeOrFail()->signMessage('solana', $derivationPath, $message, $this->sessionId);
+
+        return $this->extract($result, 'signature', 'signMessage');
+    }
+
+    public function getAppVersion(): string
+    {
+        $result = $this->bridgeOrFail()->appVersion('solana', $this->sessionId);
+
+        return $this->extract($result, 'version', 'getAppVersion');
+    }
+
+    public function getCoinType(): int
+    {
+        return $this->coinType();
+    }
+
     public function validateAddress(string $address): bool
     {
-        return strlen($address) === 44;
+        try {
+            return strlen(Base58::decode($address)) === 32;
+        } catch (\InvalidArgumentException) {
+            return false;
+        }
     }
 
     public function getAddressFormat(): string
@@ -51,4 +70,3 @@ class SolanaHandler implements ChainHandlerInterface
         return 'base58';
     }
 }
-

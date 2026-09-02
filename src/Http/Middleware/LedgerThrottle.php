@@ -3,8 +3,8 @@
 namespace MartinLechene\LedgerManager\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Http\Request;
 
 class LedgerThrottle
 {
@@ -32,7 +32,7 @@ class LedgerThrottle
 
     protected function resolveRequestSignature(Request $request): string
     {
-        return 'ledger:' . $request->ip() . '|' . ($request->user()?->id ?? 'guest');
+        return 'ledger:'.$request->ip().'|'.($request->user()?->id ?? 'guest');
     }
 
     protected function getLimits(Request $request): array
@@ -62,4 +62,3 @@ class LedgerThrottle
         ];
     }
 }
-

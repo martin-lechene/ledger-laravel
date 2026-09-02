@@ -3,9 +3,9 @@
 namespace MartinLechene\LedgerManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LedgerAccount extends Model
 {
@@ -55,9 +55,10 @@ class LedgerAccount extends Model
 
     public function getBalance(?string $asset = null)
     {
-        if (!$asset) {
+        if (! $asset) {
             return $this->balance;
         }
+
         return $this->balance[$asset] ?? null;
     }
 
@@ -65,12 +66,12 @@ class LedgerAccount extends Model
     {
         // Generate QR code data URL for the address
         // In production, use a QR code library
-        return "data:image/png;base64," . base64_encode("QR_CODE_FOR_{$this->public_address}");
+        return 'data:image/png;base64,'.base64_encode("QR_CODE_FOR_{$this->public_address}");
     }
 
     public function isLocked(): bool
     {
-        return !$this->is_active;
+        return ! $this->is_active;
     }
 
     public function scopeByChain($query, string $chain)
@@ -88,4 +89,3 @@ class LedgerAccount extends Model
         return $query->where('public_address', $address);
     }
 }
-

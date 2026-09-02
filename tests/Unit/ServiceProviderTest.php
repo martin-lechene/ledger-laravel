@@ -2,15 +2,14 @@
 
 namespace MartinLechene\LedgerManager\Tests\Unit;
 
+use MartinLechene\LedgerManager\Security\SecurityAuditor;
 use MartinLechene\LedgerManager\ServiceProvider;
-use MartinLechene\LedgerManager\Services\LedgerService;
-use MartinLechene\LedgerManager\Services\TransportFactory;
 use MartinLechene\LedgerManager\Services\ChainFactory;
 use MartinLechene\LedgerManager\Services\DeviceDiscoveryService;
 use MartinLechene\LedgerManager\Services\HIDService;
-use MartinLechene\LedgerManager\Security\SecurityAuditor;
+use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Services\TransportFactory;
 use MartinLechene\LedgerManager\Tests\TestCase;
-use Illuminate\Foundation\Application;
 
 class ServiceProviderTest extends TestCase
 {

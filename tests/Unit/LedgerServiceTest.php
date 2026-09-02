@@ -2,13 +2,14 @@
 
 namespace MartinLechene\LedgerManager\Tests\Unit;
 
-use MartinLechene\LedgerManager\Services\LedgerService;
-use MartinLechene\LedgerManager\Models\LedgerDevice;
-use MartinLechene\LedgerManager\Models\LedgerAccount;
-use MartinLechene\LedgerManager\Models\LedgerTransaction;
-use MartinLechene\LedgerManager\Models\LedgerActivityLog;
-use MartinLechene\LedgerManager\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Collection;
+use MartinLechene\LedgerManager\Models\LedgerAccount;
+use MartinLechene\LedgerManager\Models\LedgerActivityLog;
+use MartinLechene\LedgerManager\Models\LedgerDevice;
+use MartinLechene\LedgerManager\Models\LedgerTransaction;
+use MartinLechene\LedgerManager\Services\LedgerService;
+use MartinLechene\LedgerManager\Tests\TestCase;
 
 class LedgerServiceTest extends TestCase
 {
@@ -25,7 +26,9 @@ class LedgerServiceTest extends TestCase
     public function test_can_discover_devices(): void
     {
         $devices = $this->service->discoverDevices('usb');
-        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $devices);
+        $this->assertInstanceOf(Collection::class, $devices);
+        $this->assertCount(1, $devices);
+        $this->assertEquals('Ledger Nano X', $devices->first()['productName']);
     }
 
     public function test_can_connect_to_device(): void
@@ -48,7 +51,7 @@ class LedgerServiceTest extends TestCase
     {
         $deviceId = 'test-device-123';
         $this->service->connect($deviceId, 'usb');
-        
+
         $result = $this->service->disconnect();
         $this->assertTrue($result);
         $this->assertNull($this->service->getCurrentDevice());
@@ -101,7 +104,7 @@ class LedgerServiceTest extends TestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('No device connected');
-        
+
         $this->service->selectChain('ethereum');
     }
 
@@ -112,9 +115,8 @@ class LedgerServiceTest extends TestCase
         $this->service->selectChain('ethereum');
 
         $address = $this->service->getAddress("m/44'/60'/0'/0/0");
-        $this->assertIsString($address);
-        $this->assertStringStartsWith('0x', $address);
-        $this->assertEquals(42, strlen($address)); // Ethereum address length
+        $this->assertEquals('0x'.str_pad('0', 40, '0', STR_PAD_LEFT), $address);
+        $this->assertSame(42, strlen($address)); // Ethereum address length
     }
 
     public function test_get_address_throws_exception_without_chain(): void
@@ -124,7 +126,7 @@ class LedgerServiceTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('No chain selected');
-        
+
         $this->service->getAddress("m/44'/60'/0'/0/0");
     }
 
@@ -135,7 +137,7 @@ class LedgerServiceTest extends TestCase
         $this->service->selectChain('ethereum');
 
         $addresses = $this->service->generateAddressRange('ethereum', 0, 5);
-        
+
         $this->assertCount(5, $addresses);
         $this->assertDatabaseCount('ledger_accounts', 5);
 
@@ -159,7 +161,7 @@ class LedgerServiceTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -172,6 +174,7 @@ class LedgerServiceTest extends TestCase
         $this->assertInstanceOf(LedgerTransaction::class, $transaction);
         $this->assertEquals('signed', $transaction->status);
         $this->assertNotNull($transaction->signed_data);
+        $this->assertSame(132, strlen($transaction->signed_data)); // 0x + 65 bytes
         $this->assertNotNull($transaction->signed_at);
     }
 
@@ -179,7 +182,7 @@ class LedgerServiceTest extends TestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('No device connected');
-        
+
         $this->service->signTransaction("m/44'/60'/0'/0/0", '{}');
     }
 
@@ -190,9 +193,8 @@ class LedgerServiceTest extends TestCase
         $this->service->selectChain('ethereum');
 
         $signature = $this->service->signMessage("m/44'/60'/0'/0/0", 'Hello World');
-        
-        $this->assertIsString($signature);
-        $this->assertStringStartsWith('0x', $signature);
+
+        $this->assertEquals('0x'.str_repeat('cd', 65), $signature);
     }
 
     public function test_can_get_all_accounts(): void
@@ -207,7 +209,7 @@ class LedgerServiceTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -238,7 +240,7 @@ class LedgerServiceTest extends TestCase
             'ledger_device_id' => $device->id,
             'chain' => 'ethereum',
             'derivation_path' => "m/44'/60'/0'/0/0",
-            'public_address' => '0x' . bin2hex(random_bytes(20)),
+            'public_address' => '0x'.bin2hex(random_bytes(20)),
             'account_index' => 0,
         ]);
 
@@ -260,8 +262,7 @@ class LedgerServiceTest extends TestCase
     public function test_can_get_app_version(): void
     {
         $version = $this->service->getAppVersion();
-        $this->assertIsString($version);
-        $this->assertNotEmpty($version);
+        $this->assertSame('2.1.0', $version);
     }
 
     public function test_activity_logs_are_created(): void
