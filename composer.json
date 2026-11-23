@@ -34,7 +34,7 @@
     "php": "^8.2",
     "laravel/framework": "^12.0",
     "guzzlehttp/guzzle": "^7.0",
-    "phpseclib/phpseclib": "^3.0",
+    "phpseclib/phpseclib": "^3.0 || ^4.0",
     "nesbot/carbon": "^3.0",
     "symfony/process": "^7.0",
     "illuminate/cache": "^12.0"
