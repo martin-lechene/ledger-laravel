@@ -38,3 +38,10 @@ coverage/
 *.temp
 *.log
 
+
+# Library: lock file is not committed
+/composer.lock
+.phpunit.cache/
+.php-cs-fixer.cache
+.pint.cache
+.DS_Store

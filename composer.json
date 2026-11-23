@@ -1,52 +1,77 @@
 {
-    "name": "martin-lechene/ledger-laravel",
-    "description": "Enterprise-grade Laravel package for managing Ledger hardware wallets with multi-chain support, REST API, security auditing, and real-time dashboards",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Martin Lechene",
-            "email": "martin@lechene.be"
-        }
-    ],
-    "require": {
-        "php": "^8.1",
-        "laravel/framework": "^12.0",
-        "guzzlehttp/guzzle": "^7.0",
-        "phpseclib/phpseclib": "^3.0",
-        "nesbot/carbon": "^3.0",
-        "symfony/process": "^7.0",
-        "illuminate/cache": "^12.0"
+  "name": "martin-lechene/ledger-laravel",
+  "description": "Laravel package to manage Ledger hardware wallets (device discovery, address derivation, transaction and message signing) through a local ledger-bridge sidecar, with REST API, audit log, webhooks and dashboard",
+  "keywords": [
+    "laravel",
+    "ledger",
+    "hardware-wallet",
+    "crypto",
+    "bitcoin",
+    "ethereum",
+    "solana",
+    "polkadot",
+    "cardano",
+    "apdu",
+    "bluetooth",
+    "usb"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/martin-lechene/ledger-laravel",
+  "authors": [
+    {
+      "email": "contact@doganddev.eu",
+      "name": "Martin Lechene"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/martin-lechene/ledger-laravel/issues",
+    "source": "https://github.com/martin-lechene/ledger-laravel",
+    "email": "contact@doganddev.eu",
+    "docs": "https://github.com/martin-lechene/ledger-laravel#readme"
+  },
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^12.0",
+    "guzzlehttp/guzzle": "^7.0",
+    "phpseclib/phpseclib": "^3.0",
+    "nesbot/carbon": "^3.0",
+    "symfony/process": "^7.0",
+    "illuminate/cache": "^12.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "mockery/mockery": "^1.5",
+    "laravel/pint": "^1.0",
+    "orchestra/testbench": "^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MartinLechene\\LedgerManager\\": "src/"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^11.0",
-        "mockery/mockery": "^1.5",
-        "laravel/pint": "^1.0",
-        "orchestra/testbench": "^10.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "MartinLechene\\LedgerManager\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "MartinLechene\\LedgerManager\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "MartinLechene\\LedgerManager\\ServiceProvider"
-            ],
-            "aliases": {
-                "Ledger": "MartinLechene\\LedgerManager\\Facades\\Ledger"
-            }
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MartinLechene\\LedgerManager\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MartinLechene\\LedgerManager\\ServiceProvider"
+      ],
+      "aliases": {
+        "Ledger": "MartinLechene\\LedgerManager\\Facades\\Ledger"
+      }
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
 }
